@@ -12,11 +12,22 @@
 // get the information and present it to the user 
 
 
-// short hand of document select
+// short hand of document select for global access
 var doc = document;
+var pTag = doc.createElement('p');
 
-// Getting the start element id
+// Getting the start elements from DOM
+
 var btnStart = doc.getElementById('start');
+
+// This is not part of the requirement for this challange
+var pTag = doc.createElement('p');
+pTag.innerText = quizTerms;
+btnStart.insertAdjacentElement('beforebegin', pTag);
+/** Ends here **/
+
+// Create DOM elements
+
 
 // countDown function from 60 to 0
 function countDown() {

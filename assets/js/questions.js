@@ -1,22 +1,3 @@
-// AS A coding boot camp student
-// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-// SO THAT I can gauge my progress compared to my peers
-
-
-
-// Acceptance Criteria:
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
-
 
 // 1. Grab the start button from index.html: document.querySeelctor("button name") then store in a variable
 // 2.  On click methods: addEventListener('click', function(){}); 
@@ -32,8 +13,56 @@
 // get the information and present it to the user 
 
 
+var quizTerms = `
+Try to answer the following code-related questions within the time
+limit. Keep in mind that incorrect answers will penalize your
+score/time by ten seconds!`
 
 
+
+var questions = [
+    {
+        title: "This is your first question: 1? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+    {
+        title: "This is your first question: 2? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    }, {
+        title: "This is your first question: 3? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+    {
+        title: "This is your first question: 5? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+    {
+        title: "This is your first question: 6? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+    {
+        title: "This is your first question: 7? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+]
+
+var quizAnswers = ['Choice 4', 'Choice 3', 'Choice 2', 'Choice 1']
+
+// Logic to get the right answer
+
+var choices = questions[0].choices;
+
+for (var i = 0; i < choices.length; i++) {
+
+    for (var ans = 0; ans < quizAnswers.length; ans++) {
+        if (choices[i] === quizAnswers[ans]) {
+            console.log(choices[i] + " " + quizAnswers[ans]);
+        }
+
+
+    }
+
+}
 
 
 
