@@ -28,7 +28,6 @@ btnStart.insertAdjacentElement('beforebegin', pTag);
 
 // Create DOM elements
 
-
 // countDown function from 60 to 0
 function countDown() {
     var timerSec = 60;
@@ -46,3 +45,20 @@ function countDown() {
 
 // When start button is click countDown function gets regards and the function is passed by reference
 btnStart.addEventListener('click', countDown);
+
+
+
+
+// Logic to get the right answer checks
+
+var choices = questions[0].choices;
+
+for (var i = 0; i < choices.length; i++) {
+
+    for (var ans = 0; ans < quizAnswers.length; ans++) {
+        if (choices[i] === quizAnswers[ans]) {
+            console.log(choices[i] + " " + quizAnswers[ans]);
+        }
+    }
+
+}

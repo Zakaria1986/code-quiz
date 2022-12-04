@@ -33,6 +33,10 @@ var questions = [
         choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
     },
     {
+        title: "This is your first question: 4? ",
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+    },
+    {
         title: "This is your first question: 5? ",
         choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
     },
@@ -40,31 +44,35 @@ var questions = [
         title: "This is your first question: 6? ",
         choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
     },
-    {
-        title: "This is your first question: 7? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
-    },
 ]
 
 var quizAnswers = ['Choice 4', 'Choice 3', 'Choice 2', 'Choice 1']
 
-// Logic to get the right answer
-
-var choices = questions[0].choices;
-
-for (var i = 0; i < choices.length; i++) {
-
-    for (var ans = 0; ans < quizAnswers.length; ans++) {
-        if (choices[i] === quizAnswers[ans]) {
-            console.log(choices[i] + " " + quizAnswers[ans]);
-        }
 
 
-    }
+// push ansers to the browser
 
+var currentQuestionIndex;
+
+var questionsPlaceHolder = document.querySelector("#questions");
+var ul = document.createElement('ul');
+
+for (var i = 0; i < questions.length; i++) {
+    var li = document.createElement('li');
+    li.innerText = questions[i].title + "\n\n" + questions[i].choices;
+
+    ul.appendChild(li);
+    console.log(questions[i].title + "\n\n" + questions[i].choices);
 }
 
+questionsPlaceHolder.classList.remove("hide");
+questionsPlaceHolder.append(ul);
 
+// for (var i = 0; i < questions.length; i++){
+// console.log(questions[1])
+// }
+
+// loop over the object, then use click eventlistener to control the flow of the loop using either break/continue statemnes. 
 
 
 
