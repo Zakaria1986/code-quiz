@@ -42,23 +42,63 @@ function countDown() {
     }, 1000
     );
 }
-
 // When start button is click countDown function gets regards and the function is passed by reference
-btnStart.addEventListener('click', countDown);
-
-
-
+btnStart.addEventListener('click', callBackFunc);
 
 // Logic to get the right answer checks
 
-var choices = questions[0].choices;
 
-for (var i = 0; i < choices.length; i++) {
 
-    for (var ans = 0; ans < quizAnswers.length; ans++) {
-        if (choices[i] === quizAnswers[ans]) {
-            console.log(choices[i] + " " + quizAnswers[ans]);
-        }
+
+
+function startQuiz() {
+    var currentQuestionIndex;
+
+    var questionsPlaceHolder = document.querySelector("#questions");
+    var startStrean = doc.querySelector("#start-screen");
+
+    var ul = document.createElement('ul');
+
+
+    var currentIndex = 0;
+
+    var questionTile = doc.querySelector("#question-title");
+
+    questionTile.innerText = questions[currentIndex].title;
+
+
+    for (var i = 0; i < questions[currentIndex].choices.length; i++) {
+        var li = document.createElement('li');
+        li.innerText = questions[currentIndex].choices[i];
+
+        ul.appendChild(li);
+        console.log(questions[i].title + "\n\n" + questions[i].choices);
     }
 
+    questionsPlaceHolder.classList.remove("hide");
+    startStrean.classList.add('hide');
+    questionsPlaceHolder.append(ul);
 }
+
+function userSelection() {
+    var choices = questions[0].choices;
+
+    for (var i = 0; i < choices.length; i++) {
+
+        for (var ans = 0; ans < quizAnswers.length; ans++) {
+            if (choices[i] === quizAnswers[ans]) {
+                console.log(choices[i] + " " + quizAnswers[ans]);
+            }
+        }
+
+    }
+}
+
+function callBackFunc() {
+    startQuiz();
+    countDown();
+}
+
+
+
+
