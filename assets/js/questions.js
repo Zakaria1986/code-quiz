@@ -52,32 +52,10 @@ var quizAnswers = ['Choice 4', 'Choice 3', 'Choice 2', 'Choice 1']
 
 // push ansers to the browser
 
-
-
-// for (var i = 0; i < questions.length; i++){
-// console.log(questions[1])
-// }
-
 // loop over the object, then use click eventlistener to control the flow of the loop using either break/continue statemnes. 
 
-function questionsAndChoices() {
-    var currentQuestionIndex;
 
-    var questionsPlaceHolder = document.querySelector("#questions");
-    var ul = document.createElement('ul');
 
-    for (var i = 0; i < questions.length; i++) {
-        var li = document.createElement('li');
-        li.innerText = questions[i].title + "\n\n" + questions[i].choices;
-
-        ul.appendChild(li);
-        console.log(questions[i].title + "\n\n" + questions[i].choices);
-    }
-
-    questionsPlaceHolder.classList.remove("hide");
-    questionsPlaceHolder.append(ul);
-}
-// questionsAndChoices();
 
 
 

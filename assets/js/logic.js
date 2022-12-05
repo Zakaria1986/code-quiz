@@ -28,13 +28,16 @@ btnStart.insertAdjacentElement('beforebegin', pTag);
 
 // Create DOM elements
 
+// When start button is click countDown function gets regards and the function is passed by reference
+btnStart.addEventListener('click', callBackFunc);
+
+
 // countDown function from 60 to 0
 function countDown() {
     var timerSec = 60;
     var interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
         timerUpdate.innerText = timerSec;
-
         if (timerSec == 0) {
             clearInterval(interVal);
         };
@@ -42,57 +45,61 @@ function countDown() {
     }, 1000
     );
 }
-// When start button is click countDown function gets regards and the function is passed by reference
-btnStart.addEventListener('click', callBackFunc);
 
 // Logic to get the right answer checks
-
-
-
-
-
+var currentIndex = 0;
 function startQuiz() {
-    var currentQuestionIndex;
 
-    var questionsPlaceHolder = document.querySelector("#questions");
+
+    var questionsPlaceHolder = doc.querySelector("#questions");
     var startStrean = doc.querySelector("#start-screen");
-
-    var ul = document.createElement('ul');
-
-
-    var currentIndex = 0;
-
+    var choices = doc.querySelector("#choices");
     var questionTile = doc.querySelector("#question-title");
-
     questionTile.innerText = questions[currentIndex].title;
 
-
     for (var i = 0; i < questions[currentIndex].choices.length; i++) {
-        var li = document.createElement('li');
-        li.innerText = questions[currentIndex].choices[i];
-
-        ul.appendChild(li);
-        console.log(questions[i].title + "\n\n" + questions[i].choices);
+        var btn = doc.createElement('BUTTON');
+        btn.setAttribute("class", "userChoice");
+        // Setting custome attribute 
+        btn.setAttribute("data-choice", questions[currentIndex].choices[i]);
+        btn.innerText = i + 1 + " " + questions[currentIndex].choices[i];
+        choices.append(btn);
     }
 
     questionsPlaceHolder.classList.remove("hide");
     startStrean.classList.add('hide');
-    questionsPlaceHolder.append(ul);
+
+    userSelection();
 }
 
 function userSelection() {
-    var choices = questions[0].choices;
-
-    for (var i = 0; i < choices.length; i++) {
-
-        for (var ans = 0; ans < quizAnswers.length; ans++) {
-            if (choices[i] === quizAnswers[ans]) {
-                console.log(choices[i] + " " + quizAnswers[ans]);
-            }
+    var usersChoice = doc.querySelector("#choices");
+    usersChoice.addEventListener('click', function (e) {
+        var clickFeedBack;
+        if (e.target) {
+            var userClicpResult = e.target;
+            clickFeedBack = userClicpResult.getAttribute('data-choice');
         }
-
-    }
+        userFeedback(clickFeedBack);
+    });
 }
+// User feedback functions
+function userFeedback(feedback) {
+    console.log(feedback);
+    var feedback = feedback;
+    var UserAlermessage;
+    var userAlert = doc.getElementById('feedback');
+
+    for (var i = 0; i < questions[currentIndex].choices.length; i++) {
+        UserAlermessage = (questions[currentIndex].choices[i] === feedback) ? "Correct answer" : 'Wrong answer';
+    }
+
+    console.log(UserAlermessage);
+    userAlert.classList.remove('hide');
+    userAlert.innerText = UserAlermessage;
+}
+
+
 
 function callBackFunc() {
     startQuiz();
