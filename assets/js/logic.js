@@ -28,7 +28,8 @@ btnStart.insertAdjacentElement('beforebegin', pTag);
 // global varialbes used inside functions
 var CountDowntimerSec = 60;
 var currentIndex = 0;
-var NextIndex = currentIndex + 1;
+
+var ChoiceIndex = 0;
 
 /** Ends here **/
 
@@ -52,29 +53,43 @@ function countDown(timerSec) {
 }
 
 
-
 choices.addEventListener('click', function (e) {
+    userSelection(e);
+
+
     if (e.target) {
+        ChoiceIndex = currentIndex;
         currentIndex++;
     }
-    // elementClicked = false;
+    // check if the choices exist from previouse quesiton if it does then set the choices to empty
+    // then run the presentQuiz with next question
     if (choices.hasChildNodes()) {
-
         choices.innerHTML = " ";
         presentQuiz(currentIndex);
+        userSelection(e);
+        //userFeedback(currentIndex);
+
     }
 
+
+
+
+
+
+
+    // if (e.target) {
+    //     currentIndex++;
+    // }
+    // // check if the choices exist from previouse quesiton if it does then set the choices to empty
+    // // then run the presentQuiz with next question
+    // if (choices.hasChildNodes()) {
+    //     choices.innerHTML = " ";
+    //     presentQuiz(currentIndex);
+    //     userSelection(e);
+    //     //userFeedback(currentIndex);
+
+    // }
 });
-
-
-
-// function NextQuestion() {
-
-//     presentQuiz(currentIndex);
-//     countDown();
-//     userSelection();
-//     // checkCurrentIndex(questions, currentIndex);
-// }
 
 
 function presentQuiz(currIndex) {
@@ -92,7 +107,7 @@ function presentQuiz(currIndex) {
         // Setting custome attribute 
         btn.setAttribute("data-choice", questions[currIndex].choices[i]);
         btn.innerText = i + 1 + " " + questions[currIndex].choices[i];
-        console.log(currIndex);
+        console.log("array obj index " + currIndex);
         choices.append(btn);
     }
     questionsPlaceHolder.classList.remove("hide");
@@ -100,7 +115,7 @@ function presentQuiz(currIndex) {
 }
 
 
-choices.addEventListener('click', userSelection)
+// choices.addEventListener('click', userSelection)
 // Get the User choice of answers
 function userSelection(e) {
     var clickFeedBack;
@@ -108,6 +123,7 @@ function userSelection(e) {
         var userClicpResult = e.target;
         // clickFeedBack = userClicpResult.getAttribute('data-choice');
         clickFeedBack = userClicpResult.dataset.choice;
+        console.log("this is user feeback from userSelection e " + clickFeedBack);
 
     }
     // Pass on the choice to userFeedback function for validation
@@ -117,21 +133,31 @@ function userSelection(e) {
 
 // User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
+    console.log("hello this your freind feedback function userfeedback " + feedback);
+    var currIndex = ChoiceIndex;
+    console.log('fuck what am i doing' + " " + currIndex);
     var UserAlermessage;
     var userAlert = doc.getElementById('feedback');
+    var rightAnswer = questions[currIndex].answer;
+    console.log('what is the answer here: ' + rightAnswer);
+    // console.log(questions["Current index " + currIndex]);
 
-    for (var i = 0; i < questions[currentIndex].choices.length; i++) {
-        if (questions[currentIndex].choices[i] === feedback) {
-            UserAlermessage = "Correct answer";
-        }
-        else {
-            UserAlermessage = 'Wrong answer';
-        }
-        userAlert.classList.remove('hide');
-        userAlert.innerText = UserAlermessage;
+    // for (var i = 0; i < currInextChoice.length; i++) {
+    if (feedback === rightAnswer) {
+        UserAlermessage = "Correct answer";
+        console.log("array obj index " + currIndex + " You selected " + feedback + " rightAnswer " + rightAnswer);
     }
-
+    else {
+        UserAlermessage = 'Wrong answer';
+        console.log("array obj index " + currIndex + " You selected " + feedback + " rightAnswer " + rightAnswer);
+    }
+    userAlert.classList.remove('hide');
+    userAlert.innerText = UserAlermessage;
+    // }
 }
+
+
+
 // Logic to get the right answer checks
 function startQuiz() {
     presentQuiz(currentIndex);

@@ -23,26 +23,32 @@ score/time by ten seconds!`
 var questions = [
     {
         title: "This is your first question: 1? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 1"
     },
     {
         title: "This is your first question: 2? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 3"
     }, {
         title: "This is your first question: 3? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 4"
     },
     {
         title: "This is your first question: 4? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 3"
     },
     {
         title: "This is your first question: 5? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 2"
     },
     {
         title: "This is your first question: 6? ",
-        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4']
+        choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+        answer: "Choice 1"
     },
 ]
 
