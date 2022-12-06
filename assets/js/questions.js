@@ -52,7 +52,7 @@ var questions = [
     },
 ]
 
-var quizAnswers = ['Choice 4', 'Choice 3', 'Choice 2', 'Choice 1']
+// var quizAnswers = ['Choice 4', 'Choice 3', 'Choice 2', 'Choice 1']
 
 
 

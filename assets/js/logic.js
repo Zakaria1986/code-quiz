@@ -52,25 +52,31 @@ function countDown(timerSec) {
     );
 }
 
-
+var click = true;
 choices.addEventListener('click', function (e) {
-    userSelection(e);
+    //userSelection(e);
 
 
-    if (e.target) {
+    if (click) {
+
         ChoiceIndex = currentIndex;
-        currentIndex++;
+
+        userSelection(e);
+        setTimeout(() => {
+            currentIndex++;
+            presentQuiz(currentIndex);
+
+            //userFeedback(currentIndex);
+        }, 1000);
+
+        // if (choices.hasChildNodes()) {
+        //     choices.innerHTML = " ";
+        // }    
+
     }
+
     // check if the choices exist from previouse quesiton if it does then set the choices to empty
     // then run the presentQuiz with next question
-    if (choices.hasChildNodes()) {
-        choices.innerHTML = " ";
-        presentQuiz(currentIndex);
-        userSelection(e);
-        //userFeedback(currentIndex);
-
-    }
-
 
 
 
@@ -98,9 +104,14 @@ function presentQuiz(currIndex) {
     var startScrean = doc.querySelector("#start-screen");
     var questionTile = doc.querySelector("#question-title");
 
-    questionTile.innerText = questions[currIndex].title;
 
     for (var i = 0; i < questions[currIndex].choices.length; i++) {
+        // var lastEL = questions.slice(-1) || 0;
+        // if (lastEL) {
+        //     break;
+        // }
+
+        questionTile.innerText = questions[currIndex].title;
 
         var btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
@@ -151,8 +162,21 @@ function userFeedback(feedback) {
         UserAlermessage = 'Wrong answer';
         console.log("array obj index " + currIndex + " You selected " + feedback + " rightAnswer " + rightAnswer);
     }
+
     userAlert.classList.remove('hide');
     userAlert.innerText = UserAlermessage;
+
+    setTimeout(() => {
+
+        if (choices.hasChildNodes()) {
+            choices.innerHTML = " ";
+
+        }
+        userAlert.classList.add('hide');
+
+    }, 1000);
+
+
     // }
 }
 
@@ -186,7 +210,6 @@ btnStart.addEventListener('click', callBackFunc);
 
 //     });
 // }
-
 
 
 
