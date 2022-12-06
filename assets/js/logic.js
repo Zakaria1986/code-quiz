@@ -33,9 +33,7 @@ var ChoiceIndex = 0;
 
 /** Ends here **/
 
-
 // Create DOM elements
-
 
 // countDown function from 60 to 0
 
@@ -58,9 +56,11 @@ choices.addEventListener('click', function (e) {
 
 
     if (click) {
-
+        // Index set to 0 for choices question. when the choice is clicked the current index for question gets increment so need to keep choice quesiton 
+        // one one index position less to it maches with the same index as the title index
         ChoiceIndex = currentIndex;
 
+        // then run the presentQuiz with next question
         userSelection(e);
         setTimeout(() => {
             currentIndex++;
@@ -68,48 +68,17 @@ choices.addEventListener('click', function (e) {
 
             //userFeedback(currentIndex);
         }, 1000);
-
-        // if (choices.hasChildNodes()) {
-        //     choices.innerHTML = " ";
-        // }    
-
     }
-
-    // check if the choices exist from previouse quesiton if it does then set the choices to empty
-    // then run the presentQuiz with next question
-
-
-
-
-
-
-    // if (e.target) {
-    //     currentIndex++;
-    // }
-    // // check if the choices exist from previouse quesiton if it does then set the choices to empty
-    // // then run the presentQuiz with next question
-    // if (choices.hasChildNodes()) {
-    //     choices.innerHTML = " ";
-    //     presentQuiz(currentIndex);
-    //     userSelection(e);
-    //     //userFeedback(currentIndex);
-
-    // }
 });
 
-
+// This ist he main fuction which gets the questions and creates DOM elements
 function presentQuiz(currIndex) {
 
     var questionsPlaceHolder = doc.querySelector("#questions");
     var startScrean = doc.querySelector("#start-screen");
     var questionTile = doc.querySelector("#question-title");
 
-
     for (var i = 0; i < questions[currIndex].choices.length; i++) {
-        // var lastEL = questions.slice(-1) || 0;
-        // if (lastEL) {
-        //     break;
-        // }
 
         questionTile.innerText = questions[currIndex].title;
 
@@ -125,7 +94,6 @@ function presentQuiz(currIndex) {
     startScrean.classList.add('hide');
 }
 
-
 // choices.addEventListener('click', userSelection)
 // Get the User choice of answers
 function userSelection(e) {
@@ -135,12 +103,10 @@ function userSelection(e) {
         // clickFeedBack = userClicpResult.getAttribute('data-choice');
         clickFeedBack = userClicpResult.dataset.choice;
         console.log("this is user feeback from userSelection e " + clickFeedBack);
-
     }
     // Pass on the choice to userFeedback function for validation
     userFeedback(clickFeedBack);
 }
-
 
 // User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
@@ -167,19 +133,16 @@ function userFeedback(feedback) {
     userAlert.innerText = UserAlermessage;
 
     setTimeout(() => {
-
+        // check if the choices exist from previouse quesiton if it does then set the choices to empty
         if (choices.hasChildNodes()) {
             choices.innerHTML = " ";
-
         }
+        // the feedback message before loading the next question
         userAlert.classList.add('hide');
 
     }, 1000);
 
-
-    // }
 }
-
 
 
 // Logic to get the right answer checks
@@ -187,7 +150,6 @@ function startQuiz() {
     presentQuiz(currentIndex);
     countDown(CountDowntimerSec);
     //console.log(userSelection());
-
 }
 
 function callBackFunc() {
@@ -196,20 +158,6 @@ function callBackFunc() {
 // When start button is click countDown function gets regards and the function is passed by reference
 btnStart.addEventListener('click', callBackFunc);
 
-
-// function NextQuestion() {
-//     var usersChoice = doc.querySelector("#choices");
-//     var elementClicked = true;
-//     usersChoice.addEventListener('click', function (e) {
-//         if (e.targetelementClicked) {
-//             currentIndex++;
-//             startQuiz();
-//         }
-//         // elementClicked = false;
-
-
-//     });
-// }
 
 
 
