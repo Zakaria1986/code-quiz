@@ -19,22 +19,27 @@ var pTag = doc.createElement('p');
 // Getting the start elements from DOM
 
 var btnStart = doc.getElementById('start');
+var choices = doc.querySelector("#choices");
 
 // This is not part of the requirement for this challange
 var pTag = doc.createElement('p');
 pTag.innerText = quizTerms;
 btnStart.insertAdjacentElement('beforebegin', pTag);
+// global varialbes used inside functions
+var CountDowntimerSec = 60;
+var currentIndex = 0;
+var NextIndex = currentIndex + 1;
+
 /** Ends here **/
+
 
 // Create DOM elements
 
-// When start button is click countDown function gets regards and the function is passed by reference
-btnStart.addEventListener('click', callBackFunc);
-
 
 // countDown function from 60 to 0
-function countDown() {
-    var timerSec = 60;
+
+function countDown(timerSec) {
+
     var interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
         timerUpdate.innerText = timerSec;
@@ -46,65 +51,123 @@ function countDown() {
     );
 }
 
-// Logic to get the right answer checks
-var currentIndex = 0;
-function startQuiz() {
 
 
+choices.addEventListener('click', function (e) {
+    if (e.target) {
+        currentIndex++;
+    }
+    // elementClicked = false;
+    presentQuiz(currentIndex);
+});
+
+
+
+// function NextQuestion() {
+
+//     presentQuiz(currentIndex);
+//     countDown();
+//     userSelection();
+//     // checkCurrentIndex(questions, currentIndex);
+// }
+
+
+function presentQuiz(currIndex) {
     var questionsPlaceHolder = doc.querySelector("#questions");
     var startStrean = doc.querySelector("#start-screen");
-    var choices = doc.querySelector("#choices");
     var questionTile = doc.querySelector("#question-title");
-    questionTile.innerText = questions[currentIndex].title;
 
-    for (var i = 0; i < questions[currentIndex].choices.length; i++) {
+    questionTile.innerText = questions[currIndex].title;
+
+    for (var i = 0; i < questions[currIndex].choices.length; i++) {
         var btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
         // Setting custome attribute 
-        btn.setAttribute("data-choice", questions[currentIndex].choices[i]);
-        btn.innerText = i + 1 + " " + questions[currentIndex].choices[i];
+        btn.setAttribute("data-choice", questions[currIndex].choices[i]);
+        btn.innerText = i + 1 + " " + questions[currIndex].choices[i];
         choices.append(btn);
     }
-
     questionsPlaceHolder.classList.remove("hide");
     startStrean.classList.add('hide');
 
-    userSelection();
 }
 
-function userSelection() {
-    var usersChoice = doc.querySelector("#choices");
-    usersChoice.addEventListener('click', function (e) {
-        var clickFeedBack;
-        if (e.target) {
-            var userClicpResult = e.target;
-            clickFeedBack = userClicpResult.getAttribute('data-choice');
-        }
-        userFeedback(clickFeedBack);
-    });
+choices.addEventListener('click', userSelection)
+// Get the User choice of answers
+function userSelection(e) {
+    var clickFeedBack;
+    if (e.target) {
+        var userClicpResult = e.target;
+        // clickFeedBack = userClicpResult.getAttribute('data-choice');
+        clickFeedBack = userClicpResult.dataset.choice;
+
+    }
+    // Pass on the choice to userFeedback function for validation
+    userFeedback(clickFeedBack);
 }
-// User feedback functions
+
+// function userSelection() {
+//     var usersChoice = doc.querySelector("#choices");
+//     usersChoice.addEventListener('click', function (e) {
+//         var clickFeedBack;
+//         if (e.target) {
+//             var userClicpResult = e.target;
+//             // clickFeedBack = userClicpResult.getAttribute('data-choice');
+//             clickFeedBack = userClicpResult.dataset.choice;
+
+//             // Pass on the choice to userFeedback function for validation
+//         }
+//         userFeedback(clickFeedBack);
+//     });
+
+// }
+
+// User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
-    console.log(feedback);
-    var feedback = feedback;
     var UserAlermessage;
     var userAlert = doc.getElementById('feedback');
 
     for (var i = 0; i < questions[currentIndex].choices.length; i++) {
-        UserAlermessage = (questions[currentIndex].choices[i] === feedback) ? "Correct answer" : 'Wrong answer';
+        if (questions[currentIndex].choices[i] === feedback) {
+            UserAlermessage = "Correct answer";
+        }
+        else {
+            UserAlermessage = 'Wrong answer';
+        }
+        userAlert.classList.remove('hide');
+        userAlert.innerText = UserAlermessage;
     }
 
-    console.log(UserAlermessage);
-    userAlert.classList.remove('hide');
-    userAlert.innerText = UserAlermessage;
 }
+// Logic to get the right answer checks
+function startQuiz() {
+    presentQuiz(currentIndex);
+    countDown(CountDowntimerSec);
+    //console.log(userSelection());
 
-
+}
 
 function callBackFunc() {
     startQuiz();
-    countDown();
 }
+// When start button is click countDown function gets regards and the function is passed by reference
+btnStart.addEventListener('click', callBackFunc);
+
+
+// function NextQuestion() {
+//     var usersChoice = doc.querySelector("#choices");
+//     var elementClicked = true;
+//     usersChoice.addEventListener('click', function (e) {
+//         if (e.targetelementClicked) {
+//             currentIndex++;
+//             startQuiz();
+//         }
+//         // elementClicked = false;
+
+
+//     });
+// }
+
 
 
 
