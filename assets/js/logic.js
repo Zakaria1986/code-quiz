@@ -58,7 +58,12 @@ choices.addEventListener('click', function (e) {
         currentIndex++;
     }
     // elementClicked = false;
-    presentQuiz(currentIndex);
+    if (choices.hasChildNodes()) {
+
+        choices.innerHTML = " ";
+        presentQuiz(currentIndex);
+    }
+
 });
 
 
@@ -73,24 +78,27 @@ choices.addEventListener('click', function (e) {
 
 
 function presentQuiz(currIndex) {
+
     var questionsPlaceHolder = doc.querySelector("#questions");
-    var startStrean = doc.querySelector("#start-screen");
+    var startScrean = doc.querySelector("#start-screen");
     var questionTile = doc.querySelector("#question-title");
 
     questionTile.innerText = questions[currIndex].title;
 
     for (var i = 0; i < questions[currIndex].choices.length; i++) {
+
         var btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
         // Setting custome attribute 
         btn.setAttribute("data-choice", questions[currIndex].choices[i]);
         btn.innerText = i + 1 + " " + questions[currIndex].choices[i];
+        console.log(currIndex);
         choices.append(btn);
     }
     questionsPlaceHolder.classList.remove("hide");
-    startStrean.classList.add('hide');
-
+    startScrean.classList.add('hide');
 }
+
 
 choices.addEventListener('click', userSelection)
 // Get the User choice of answers
@@ -106,21 +114,6 @@ function userSelection(e) {
     userFeedback(clickFeedBack);
 }
 
-// function userSelection() {
-//     var usersChoice = doc.querySelector("#choices");
-//     usersChoice.addEventListener('click', function (e) {
-//         var clickFeedBack;
-//         if (e.target) {
-//             var userClicpResult = e.target;
-//             // clickFeedBack = userClicpResult.getAttribute('data-choice');
-//             clickFeedBack = userClicpResult.dataset.choice;
-
-//             // Pass on the choice to userFeedback function for validation
-//         }
-//         userFeedback(clickFeedBack);
-//     });
-
-// }
 
 // User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
