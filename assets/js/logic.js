@@ -27,6 +27,10 @@ pTag.innerText = quizTerms;
 btnStart.insertAdjacentElement('beforebegin', pTag);
 // global varialbes used inside functions
 var CountDowntimerSec = 60;
+// CountDowntimerSec.addEventListener('change', function () {
+//     countDown(CountDowntimerSec);
+// });
+console.log(CountDowntimerSec);
 var currentIndex = 0;
 
 var ChoiceIndex = 0;
@@ -37,23 +41,24 @@ var ChoiceIndex = 0;
 
 // countDown function from 60 to 0
 
-function countDown(timerSec) {
+function countDown() {
 
     var interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
-        timerUpdate.innerText = timerSec;
-        if (timerSec == 0) {
+        timerUpdate.innerText = CountDowntimerSec;
+        if (CountDowntimerSec == 0) {
             clearInterval(interVal);
-        };
-        timerSec--;
+        }
+        // else if (wrongAnswerDecrement() === "Wrong answer") {
+        //     console.log("its working");
+        // }
+        CountDowntimerSec--;
     }, 1000
     );
 }
 
 var click = true;
 choices.addEventListener('click', function (e) {
-    //userSelection(e);
-
 
     if (click) {
         // Index set to 0 for choices question. when the choice is clicked the current index for question gets increment so need to keep choice quesiton 
@@ -78,9 +83,20 @@ function presentQuiz(currIndex) {
     var startScrean = doc.querySelector("#start-screen");
     var questionTile = doc.querySelector("#question-title");
 
-    for (var i = 0; i < questions[currIndex].choices.length; i++) {
+    var lastIndex = questions[questions.length - 1] || 0;
+    console.log("Last index of the array ", lastIndex);
 
-        questionTile.innerText = questions[currIndex].title;
+    for (var i = 0; i < questions[currIndex].choices.length; i++) {
+        var title = questions[currIndex].title;
+        questionTile.innerText = title;
+
+
+
+        if (currIndex === lastIndex) {
+
+            console.log('Thats the last question');
+
+        }
 
         var btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
@@ -112,7 +128,6 @@ function userSelection(e) {
 function userFeedback(feedback) {
     console.log("hello this your freind feedback function userfeedback " + feedback);
     var currIndex = ChoiceIndex;
-    console.log('fuck what am i doing' + " " + currIndex);
     var UserAlermessage;
     var userAlert = doc.getElementById('feedback');
     var rightAnswer = questions[currIndex].answer;
@@ -122,11 +137,12 @@ function userFeedback(feedback) {
     // for (var i = 0; i < currInextChoice.length; i++) {
     if (feedback === rightAnswer) {
         UserAlermessage = "Correct answer";
-        console.log("array obj index " + currIndex + " You selected " + feedback + " rightAnswer " + rightAnswer);
     }
     else {
         UserAlermessage = 'Wrong answer';
-        console.log("array obj index " + currIndex + " You selected " + feedback + " rightAnswer " + rightAnswer);
+        CountDowntimerSec -= 10;
+        // wrongAnswerDecrement(UserAlermessage);
+
     }
 
     userAlert.classList.remove('hide');
@@ -136,19 +152,24 @@ function userFeedback(feedback) {
         // check if the choices exist from previouse quesiton if it does then set the choices to empty
         if (choices.hasChildNodes()) {
             choices.innerHTML = " ";
+
         }
         // the feedback message before loading the next question
         userAlert.classList.add('hide');
+
 
     }, 1000);
 
 }
 
 
+
+
+
 // Logic to get the right answer checks
 function startQuiz() {
     presentQuiz(currentIndex);
-    countDown(CountDowntimerSec);
+    countDown();
     //console.log(userSelection());
 }
 
