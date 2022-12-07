@@ -30,7 +30,15 @@ var CountDowntimerSec = 60;
 // CountDowntimerSec.addEventListener('change', function () {
 //     countDown(CountDowntimerSec);
 // });
-console.log(CountDowntimerSec);
+
+if (CountDowntimerSec < 0) {
+    CountDowntimerSec = 0;
+
+
+}
+
+
+
 var currentIndex = 0;
 
 var ChoiceIndex = 0;
@@ -46,7 +54,9 @@ function countDown() {
     var interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
         timerUpdate.innerText = CountDowntimerSec;
-        if (CountDowntimerSec == 0) {
+        if (CountDowntimerSec < 0) {
+            CountDowntimerSec = 0;
+            timerUpdate.innerText = CountDowntimerSec;
             clearInterval(interVal);
         }
         // else if (wrongAnswerDecrement() === "Wrong answer") {
@@ -84,18 +94,19 @@ function presentQuiz(currIndex) {
     var questionTile = doc.querySelector("#question-title");
 
     var lastIndex = questions[questions.length - 1] || 0;
-    console.log("Last index of the array ", lastIndex);
 
     for (var i = 0; i < questions[currIndex].choices.length; i++) {
         var title = questions[currIndex].title;
         questionTile.innerText = title;
 
+        // Set if statement, which stops the timer if the question i the last item in the array
 
 
+
+        // Keeping track of score question is the last question in the array;
         if (currIndex === lastIndex) {
-
-            console.log('Thats the last question');
-
+            var score = CountDowntimerSec;
+            console.log('Your score is ' + CountDowntimerSec);
         }
 
         var btn = doc.createElement('BUTTON');
@@ -140,9 +151,9 @@ function userFeedback(feedback) {
     }
     else {
         UserAlermessage = 'Wrong answer';
-        CountDowntimerSec -= 10;
-        // wrongAnswerDecrement(UserAlermessage);
-
+        if (CountDowntimerSec >= 0) {
+            CountDowntimerSec -= 10;
+        }
     }
 
     userAlert.classList.remove('hide');
@@ -152,19 +163,12 @@ function userFeedback(feedback) {
         // check if the choices exist from previouse quesiton if it does then set the choices to empty
         if (choices.hasChildNodes()) {
             choices.innerHTML = " ";
-
         }
         // the feedback message before loading the next question
         userAlert.classList.add('hide');
-
-
     }, 1000);
 
 }
-
-
-
-
 
 // Logic to get the right answer checks
 function startQuiz() {
