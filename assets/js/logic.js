@@ -12,6 +12,7 @@
 // get the information and present it to the user 
 
 
+
 // short hand of document select for global access
 var doc = document;
 var pTag = doc.createElement('p');
@@ -78,11 +79,10 @@ function endQuiz() {
 
     var finalScore = doc.querySelector("#final-score");
     finalScore.innerText = CountDowntimerSec;
-
-
 }
 
-
+// When the initial is attempted to save the code below saves the score and intial 
+// in the local storage on the browser, which then redirect user to highscore page
 submitInitial.addEventListener('click', function (e) {
     e.preventDefault;
 
@@ -100,10 +100,8 @@ submitInitial.addEventListener('click', function (e) {
 
 
 });
-
-
-
-
+// click = true is used in the if codition within the choice event to check if the event is clicked, 
+// if so then excute the code inside 
 var click = true;
 choices.addEventListener('click', function (e) {
 
@@ -116,6 +114,10 @@ choices.addEventListener('click', function (e) {
         userSelection(e);
 
         setTimeout(() => {
+
+            // very time the next question is fetched presented 
+            // Code checks to see if the current index is last element in the array 
+            // if so end quiz other wise continue to get the next question
             if (questions.length - 1 === currentIndex) {
                 // Create a form that take users initials 
                 // and hide the current questions 
@@ -127,7 +129,6 @@ choices.addEventListener('click', function (e) {
                 //userFeedback(currentIndex);
             }
         }, 1000);
-
     }
 });
 
@@ -165,7 +166,6 @@ function presentQuiz(currIndex) {
 function userSelection(e) {
 
     // check first if there is a next question before show the next question
-
     var clickFeedBack;
     if (e.target) {
         var userClicpResult = e.target;
@@ -209,30 +209,24 @@ function userFeedback(feedback) {
         // var countclear = countDown();
         // console.log('this is true', countclear);
         clearInterval(interVal);
-
     }
     setTimeout(() => {
         // check if the choices exist from previouse quesiton if it does then set the choices to empty
         if (choices.hasChildNodes() && currentIndex !== lastIndex) {
             choices.innerHTML = " ";
-
         }
-
         // the feedback message before loading the next question
         userAlert.classList.add('hide');
-    }, 1000);
-
-
-
+    }, 400);
 }
 
-// Logic to get the right answer checks
+// The function bellow is bit uneccessary, but don't wanna mess around the code just
 function startQuiz() {
     presentQuiz(currentIndex);
     countDown();
     //console.log(userSelection());
 }
-
+// This function gets called in the start button below 
 function callBackFunc() {
     startQuiz();
 }
