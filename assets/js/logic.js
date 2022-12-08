@@ -20,6 +20,7 @@ var pTag = doc.createElement('p');
 
 var btnStart = doc.getElementById('start');
 var choices = doc.querySelector("#choices");
+var submitInitial = doc.querySelector("#submit");
 
 // This is not part of the requirement for this challange
 var pTag = doc.createElement('p');
@@ -30,18 +31,14 @@ var CountDowntimerSec = 60;
 // CountDowntimerSec.addEventListener('change', function () {
 //     countDown(CountDowntimerSec);
 // });
-
-if (CountDowntimerSec < 0) {
-    CountDowntimerSec = 0;
-
-
-}
-
-
-
+var lastIndex = questions[questions.length - 1] || 0;
 var currentIndex = 0;
-
 var ChoiceIndex = 0;
+var interVal;
+var score;
+
+
+// window locatoin to send user to highcore page 
 
 /** Ends here **/
 
@@ -51,21 +48,57 @@ var ChoiceIndex = 0;
 
 function countDown() {
 
-    var interVal = setInterval(function () {
+    interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
         timerUpdate.innerText = CountDowntimerSec;
         if (CountDowntimerSec < 0) {
             CountDowntimerSec = 0;
             timerUpdate.innerText = CountDowntimerSec;
-            clearInterval(interVal);
         }
         // else if (wrongAnswerDecrement() === "Wrong answer") {
         //     console.log("its working");
         // }
+
         CountDowntimerSec--;
+
     }, 1000
     );
+
+    if (currentIndex == lastIndex && (currentIndex == "undefined" || ChoiceIndex == "undefined")) {
+        clearInterval(interVal);
+    }
 }
+
+function endQuiz() {
+    var questionsPlaceHolder = doc.querySelector("#questions");
+    questionsPlaceHolder.classList.add("hide");
+
+    var endScreenPlaceHolder = doc.querySelector("#end-screen");
+    endScreenPlaceHolder.classList.remove("hide");
+
+    var finalScore = doc.querySelector("#final-score");
+    finalScore.innerText = CountDowntimerSec;
+
+
+}
+
+
+submitInitial.addEventListener('click', function (e) {
+    e.preventDefault;
+
+    var getUserInitial = doc.getElementById("initials").value;
+    var browserLocalStorage = [
+        {
+            "UserScore": currentIndex,
+            "userInitial": getUserInitial
+        }];
+
+    localStorage.setItem("quizResult", JSON.stringify(browserLocalStorage));
+    console.log(browserLocalStorage);
+
+    window.location.href = "./highscores.html";
+
+});
 
 var click = true;
 choices.addEventListener('click', function (e) {
@@ -74,15 +107,23 @@ choices.addEventListener('click', function (e) {
         // Index set to 0 for choices question. when the choice is clicked the current index for question gets increment so need to keep choice quesiton 
         // one one index position less to it maches with the same index as the title index
         ChoiceIndex = currentIndex;
-
+        //
         // then run the presentQuiz with next question
         userSelection(e);
-        setTimeout(() => {
-            currentIndex++;
-            presentQuiz(currentIndex);
 
-            //userFeedback(currentIndex);
+        setTimeout(() => {
+            if (questions.length - 1 === currentIndex) {
+                // Create a form that take users initials 
+                // and hide the current questions 
+                endQuiz();
+
+            } else {
+                currentIndex++;
+                presentQuiz(currentIndex);
+                //userFeedback(currentIndex);
+            }
         }, 1000);
+
     }
 });
 
@@ -93,7 +134,7 @@ function presentQuiz(currIndex) {
     var startScrean = doc.querySelector("#start-screen");
     var questionTile = doc.querySelector("#question-title");
 
-    var lastIndex = questions[questions.length - 1] || 0;
+    // move the empty out the choices div here
 
     for (var i = 0; i < questions[currIndex].choices.length; i++) {
         var title = questions[currIndex].title;
@@ -101,13 +142,7 @@ function presentQuiz(currIndex) {
 
         // Set if statement, which stops the timer if the question i the last item in the array
 
-
-
         // Keeping track of score question is the last question in the array;
-        if (currIndex === lastIndex) {
-            var score = CountDowntimerSec;
-            console.log('Your score is ' + CountDowntimerSec);
-        }
 
         var btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
@@ -124,6 +159,9 @@ function presentQuiz(currIndex) {
 // choices.addEventListener('click', userSelection)
 // Get the User choice of answers
 function userSelection(e) {
+
+    // check first if there is a next question before show the next question
+
     var clickFeedBack;
     if (e.target) {
         var userClicpResult = e.target;
@@ -158,15 +196,29 @@ function userFeedback(feedback) {
 
     userAlert.classList.remove('hide');
     userAlert.innerText = UserAlermessage;
+    // && questions.length(questions.lastIndexOf())
+    // var lastWord = questions[questions.length - 1];
+    // var lastIndex = questions.lastIndexOf(lastWord);
 
+    if (currentIndex == (questions.length - 1)) {
+        console.log('this is true');
+        // var countclear = countDown();
+        // console.log('this is true', countclear);
+        clearInterval(interVal);
+
+    }
     setTimeout(() => {
         // check if the choices exist from previouse quesiton if it does then set the choices to empty
-        if (choices.hasChildNodes()) {
+        if (choices.hasChildNodes() && currentIndex !== lastIndex) {
             choices.innerHTML = " ";
+
         }
+
         // the feedback message before loading the next question
         userAlert.classList.add('hide');
     }, 1000);
+
+
 
 }
 
