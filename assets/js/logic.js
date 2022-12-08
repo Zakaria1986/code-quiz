@@ -89,16 +89,20 @@ submitInitial.addEventListener('click', function (e) {
     var getUserInitial = doc.getElementById("initials").value;
     var browserLocalStorage = [
         {
-            "UserScore": currentIndex,
+            "UserScore": CountDowntimerSec,
             "userInitial": getUserInitial
         }];
 
     localStorage.setItem("quizResult", JSON.stringify(browserLocalStorage));
-    console.log(browserLocalStorage);
 
     window.location.href = "./highscores.html";
 
+
+
 });
+
+
+
 
 var click = true;
 choices.addEventListener('click', function (e) {
