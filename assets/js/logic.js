@@ -11,8 +11,6 @@
 // then take the value store it in browser local storage or in an array or an object 
 // get the information and present it to the user 
 
-
-
 // short hand of document select for global access
 var doc = document;
 var pTag = doc.createElement('p');
@@ -54,6 +52,7 @@ function countDown() {
         timerUpdate.innerText = CountDowntimerSec;
         if (CountDowntimerSec <= 0) {
             CountDowntimerSec = 0;
+            timerUpdate.innerText = CountDowntimerSec;
             endQuiz();
         }
         // else if (wrongAnswerDecrement() === "Wrong answer") {
@@ -89,8 +88,7 @@ submitInitial.addEventListener('click', function (e) {
     if (CountDowntimerSec <= 0) {
         CountDowntimerSec = 0;
     }
-
-
+    // Preparing date for local storage
     var getUserInitial = doc.getElementById("initials").value;
     var browserLocalStorage = [
         {
@@ -98,12 +96,11 @@ submitInitial.addEventListener('click', function (e) {
             "userInitial": getUserInitial
         }];
 
+    // Storing data in local storage. Before storing data is being strinigying as objects cannot be stored
     localStorage.setItem("quizResult", JSON.stringify(browserLocalStorage));
 
+    //Redirecting to highscore page
     window.location.href = "./highscores.html";
-
-
-
 });
 // click = true is used in the if codition within the choice event to check if the event is clicked, 
 // if so then excute the code inside 
@@ -222,7 +219,7 @@ function userFeedback(feedback) {
         }
         // the feedback message before loading the next question
         userAlert.classList.add('hide');
-    }, 400);
+    }, 1000);
 }
 
 // The function bellow is bit uneccessary, but don't wanna mess around the code just
