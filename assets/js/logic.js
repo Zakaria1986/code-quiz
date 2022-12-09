@@ -52,9 +52,9 @@ function countDown() {
     interVal = setInterval(function () {
         var timerUpdate = doc.querySelector('#time');
         timerUpdate.innerText = CountDowntimerSec;
-        if (CountDowntimerSec < 0) {
+        if (CountDowntimerSec <= 0) {
             CountDowntimerSec = 0;
-            timerUpdate.innerText = CountDowntimerSec;
+            endQuiz();
         }
         // else if (wrongAnswerDecrement() === "Wrong answer") {
         //     console.log("its working");
@@ -69,7 +69,7 @@ function countDown() {
         clearInterval(interVal);
     }
 }
-
+// this function ends the quiz based on some condition 
 function endQuiz() {
     var questionsPlaceHolder = doc.querySelector("#questions");
     questionsPlaceHolder.classList.add("hide");
@@ -85,6 +85,11 @@ function endQuiz() {
 // in the local storage on the browser, which then redirect user to highscore page
 submitInitial.addEventListener('click', function (e) {
     e.preventDefault;
+    // This code checks to see if the timer is 0 or less, if so return 0 and not -1
+    if (CountDowntimerSec <= 0) {
+        CountDowntimerSec = 0;
+    }
+
 
     var getUserInitial = doc.getElementById("initials").value;
     var browserLocalStorage = [
@@ -118,7 +123,7 @@ choices.addEventListener('click', function (e) {
             // very time the next question is fetched presented 
             // Code checks to see if the current index is last element in the array 
             // if so end quiz other wise continue to get the next question
-            if (questions.length - 1 === currentIndex) {
+            if (questions.length - 1 === currentIndex || CountDowntimerSec < 0) {
                 // Create a form that take users initials 
                 // and hide the current questions 
                 endQuiz();
