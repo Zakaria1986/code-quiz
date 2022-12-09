@@ -27,7 +27,7 @@ Create a code quiz that contains the following requirements:
 
 * The quiz should end when all questions are answered or the timer reaches 0.
 
-  + When the game ends, it should display their score and give the user the ability to save their initials and their score
+  + When the game ends, it should display their score and give the user the ability to save their initials and their score in the localstoreage
 
 Here is an example what the app does and how to use it: 
 
@@ -35,4 +35,23 @@ Here is an example what the app does and how to use it:
 
 ![alt text](/assets/img/code_quiz.gif)
 
-; 
+
+
+Number of pages the app contains: 2
+
+*  index page for starter and quiz screen and highscore page where broswer get the score and user initials from localstorage. 
+
+To get the client presentation logically presented. As the creator of the app. I have implemented the following logics; 
+
+    - Used one js file to store the questions in object array which was looped and accessed in the logic script
+    
+
+   Please:  https://github.com/Zakaria1986/code-quiz/blob/main/assets/js/questions.js
+
+    -  Next is the logic of the app written in logic.js. I have extensively commented each section of the code in logic.js code file, is you are interested please see: https://github.com/Zakaria1986/code-quiz/blob/main/assets/js/logic.js
+
+    - To retriving data from browser localstorage is written in https://github.com/Zakaria1986/code-quiz/blob/main/assets/js/scores.js
+
+Thank you for reading and I hope you have enjoyed the browsing!
+
+No copyright issues here, take the code or whatever you desire so and do whatever you like with it. I have gained and learnt what I needed to : P

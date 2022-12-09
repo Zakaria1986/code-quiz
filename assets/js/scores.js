@@ -24,7 +24,10 @@ scoreClear.addEventListener('click', function (e) {
 });
 
 // when user clicks this button removes stored value and should allow the users start again
-goBackToStartScreen.addEventListener('click', function (e) {
-    e.preventDefault;
-    localStorage.removeItem("quizResult");
-});
+
+// That piece of code is not needed as I've realised users might wanna compare their scores by more than one attempted and comparing the score
+
+// goBackToStartScreen.addEventListener('click', function (e) {
+//     e.preventDefault;
+//     localStorage.removeItem("quizResult");
+// });
