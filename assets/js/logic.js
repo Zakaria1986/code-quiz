@@ -16,6 +16,8 @@ var doc = document;
 var pTag = doc.createElement('p');
 
 // Getting the start elements from DOM
+// button for choices
+var btn;
 
 var btnStart = doc.getElementById('start');
 var choices = doc.querySelector("#choices");
@@ -35,6 +37,8 @@ var currentIndex = 0;
 var ChoiceIndex = 0;
 var interVal;
 var score;
+
+
 
 
 // window locatoin to send user to highcore page 
@@ -157,8 +161,9 @@ function presentQuiz(currIndex) {
 
         // Keeping track of score question is the last question in the array;
 
-        var btn = doc.createElement('BUTTON');
+        btn = doc.createElement('BUTTON');
         btn.setAttribute("class", "userChoice");
+        // btn.setAttribute("onclick", "sound()");
         // Setting custome attribute 
         btn.setAttribute("data-choice", questions[currIndex].choices[i]);
         btn.innerText = i + 1 + " " + questions[currIndex].choices[i];
@@ -168,6 +173,8 @@ function presentQuiz(currIndex) {
     questionsPlaceHolder.classList.remove("hide");
     startScrean.classList.add('hide');
 }
+
+
 
 // choices.addEventListener('click', userSelection)
 // Get the User choice of answers
@@ -185,6 +192,10 @@ function userSelection(e) {
     userFeedback(clickFeedBack);
 }
 
+
+
+
+
 // User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
     console.log("hello this your freind feedback function userfeedback " + feedback);
@@ -192,14 +203,32 @@ function userFeedback(feedback) {
     var UserAlermessage;
     var userAlert = doc.getElementById('feedback');
     var rightAnswer = questions[currIndex].answer;
-    console.log('what is the answer here: ' + rightAnswer);
     // console.log(questions["Current index " + currIndex]);
+    var button = doc.querySelector(".userChoice");
+    console.log('this is the write answer....', button)
+
+    var sound = {
+
+        "correctSound": function sound() {
+            var snd = new Audio('assets/sfx/correct.wav');
+            snd.play(); //plays the sound
+        },
+        "wrongSound": function sound() {
+            var snd = new Audio('assets/sfx/incorrect.wav');
+            snd.play();//plays the sound
+        }
+    }
+
 
     // for (var i = 0; i < currInextChoice.length; i++) {
     if (feedback === rightAnswer) {
+        var sound = sound.correctSound();
+        button.setAttribute('onclick', 'sound()')
         UserAlermessage = "Correct answer";
     }
     else {
+        var sound = sound.wrongSound();
+        button.setAttribute('onclick', 'sound()')
         UserAlermessage = 'Wrong answer';
         if (CountDowntimerSec >= 0) {
             CountDowntimerSec -= 10;
@@ -213,7 +242,7 @@ function userFeedback(feedback) {
     // var lastIndex = questions.lastIndexOf(lastWord);
 
     if (currentIndex == (questions.length - 1)) {
-        console.log('this is true');
+        // console.log('this is true');
         // var countclear = countDown();
         // console.log('this is true', countclear);
         clearInterval(interVal);
