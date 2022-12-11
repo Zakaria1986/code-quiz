@@ -3,17 +3,22 @@ var doc = document;
 var scoreElement = doc.querySelector("#highscores");
 var goBackToStartScreen = doc.querySelector("Button");
 var scoreClear = doc.querySelector("#clear");
-var UserOutPutString = ` `;
+var liEl = doc.createElement('li');
+scoreElement.setAttribute("list-style-type", "none");
 
-// functions run when the window loads and gets output information
-// then set it into li string before its pushed to element
+var UserOutputString = '';
+var getUserResult = JSON.parse(localStorage.getItem("quizResult"));
 window.addEventListener('load', function () {
-    var getUserResult = JSON.parse(localStorage.getItem("quizResult"));
+    // Here counting down to show the most recent score first
+    for (var i = getUserResult.length - 1; i > -1; i--) {
+        UserOutputString += `<li style='list-style-type: none'>${i + 1}. <span style='font-weight:bold'
+    '> Your initial is:</span> ${getUserResult[i].userInitial} <span style='font-weight:bold'
+    '> and your highscore is:</span> ${getUserResult[i].UserScore}</li>`;
 
-    UserOutPutString += `<li>Your highscore: ${getUserResult[0].UserScore}</li>`;
-    UserOutPutString += `<li>Your initial is: ${getUserResult[0].userInitial}</li>`;
+        scoreElement.innerHTML = UserOutputString;
 
-    scoreElement.innerHTML = UserOutPutString;
+    }
+
 });
 
 // when the clear button is clicked this event clears the local storage and sets the li element to nothing

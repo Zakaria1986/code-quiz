@@ -83,18 +83,24 @@ function endQuiz() {
 // When the initial is attempted to save the code below saves the score and intial 
 // in the local storage on the browser, which then redirect user to highscore page
 submitInitial.addEventListener('click', function (e) {
-    e.preventDefault;
+
     // This code checks to see if the timer is 0 or less, if so return 0 and not -1
     if (CountDowntimerSec <= 0) {
+        e.preventDefault;
         CountDowntimerSec = 0;
     }
     // Preparing date for local storage
     var getUserInitial = doc.getElementById("initials").value;
-    var browserLocalStorage = [
-        {
-            "UserScore": CountDowntimerSec,
-            "userInitial": getUserInitial
-        }];
+
+
+    let browserLocalStorage = JSON.parse(localStorage.getItem("quizResult")) || [];
+    //var browserLocalStorage = [];
+
+    var newItem = {
+        "UserScore": CountDowntimerSec,
+        "userInitial": getUserInitial
+    }
+    browserLocalStorage.push(newItem);
 
     // Storing data in local storage. Before storing data is being strinigying as objects cannot be stored
     localStorage.setItem("quizResult", JSON.stringify(browserLocalStorage));
@@ -106,7 +112,7 @@ submitInitial.addEventListener('click', function (e) {
 // if so then excute the code inside 
 var click = true;
 choices.addEventListener('click', function (e) {
-
+    e.preventDefault;
     if (click) {
         // Index set to 0 for choices question. when the choice is clicked the current index for question gets increment so need to keep choice quesiton 
         // one one index position less to it maches with the same index as the title index
