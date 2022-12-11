@@ -5,7 +5,6 @@ var goBackToStartScreen = doc.querySelector("Button");
 var scoreClear = doc.querySelector("#clear");
 var liEl = doc.createElement('li');
 scoreElement.setAttribute("list-style-type", "none");
-
 var UserOutputString = '';
 var getUserResult = JSON.parse(localStorage.getItem("quizResult"));
 window.addEventListener('load', function () {
@@ -16,9 +15,7 @@ window.addEventListener('load', function () {
     '> and your highscore is:</span> ${getUserResult[i].UserScore}</li>`;
 
         scoreElement.innerHTML = UserOutputString;
-
     }
-
 });
 
 // when the clear button is clicked this event clears the local storage and sets the li element to nothing

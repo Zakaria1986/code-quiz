@@ -38,9 +38,6 @@ var ChoiceIndex = 0;
 var interVal;
 var score;
 
-
-
-
 // window locatoin to send user to highcore page 
 
 /** Ends here **/
@@ -95,7 +92,6 @@ submitInitial.addEventListener('click', function (e) {
     }
     // Preparing date for local storage
     var getUserInitial = doc.getElementById("initials").value;
-
 
     let browserLocalStorage = JSON.parse(localStorage.getItem("quizResult")) || [];
     //var browserLocalStorage = [];
@@ -174,8 +170,6 @@ function presentQuiz(currIndex) {
     startScrean.classList.add('hide');
 }
 
-
-
 // choices.addEventListener('click', userSelection)
 // Get the User choice of answers
 function userSelection(e) {
@@ -191,10 +185,6 @@ function userSelection(e) {
     // Pass on the choice to userFeedback function for validation
     userFeedback(clickFeedBack);
 }
-
-
-
-
 
 // User feedback functions, which validates the user choice with correct answer
 function userFeedback(feedback) {
@@ -218,7 +208,6 @@ function userFeedback(feedback) {
             snd.play();//plays the sound
         }
     }
-
 
     // for (var i = 0; i < currInextChoice.length; i++) {
     if (feedback === rightAnswer) {
